@@ -37,4 +37,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7"
     implementation project(":cameraView")
 
+    //crypto
+    implementation "androidx.security:security-crypto:$crypto_version"
+
 }
