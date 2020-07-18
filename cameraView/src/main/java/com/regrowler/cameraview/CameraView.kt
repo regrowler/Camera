@@ -34,7 +34,7 @@ public class CameraView(context: Context, attrs: AttributeSet? = null, defStyle:
         ).apply {
             id = View.generateViewId()
             layoutParams =
-                LayoutParams(LayoutParams.MATCH_CONSTRAINT, LayoutParams.MATCH_CONSTRAINT)
+                LayoutParams(LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT)
         }
     }
     private val mSurfaceTextureListener: TextureView.SurfaceTextureListener = object :

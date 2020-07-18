@@ -5,9 +5,10 @@ import android.hardware.camera2.CameraCharacteristics
 val CameraHelper.mSensorOrientation: Int?
     get() {
         currentCameraId?.let {
-            return manager
+            var t=manager
                 .getCameraCharacteristics(it)
                 .get(CameraCharacteristics.SENSOR_ORIENTATION)
+            return t
         }
         return null
     }

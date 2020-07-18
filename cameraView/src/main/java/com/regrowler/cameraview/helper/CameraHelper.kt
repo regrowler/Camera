@@ -146,6 +146,7 @@ class CameraHelper(
     }
 
     fun setCameraType() {
+
         frontCameraId?.let {
             cameraType = CameraType.FRONT
             return

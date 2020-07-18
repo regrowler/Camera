@@ -8,7 +8,7 @@ fun CameraHelper.configureTransform(viewWidth: Int, viewHeight: Int) {
     if (null == mPreviewSize) {
         return
     }
-    display.orientation.let { rotation ->
+    display.rotation.let { rotation ->
         val matrix = Matrix()
         val viewRect = RectF(0f, 0f, viewWidth.toFloat(), viewHeight.toFloat())
         val bufferRect = RectF(

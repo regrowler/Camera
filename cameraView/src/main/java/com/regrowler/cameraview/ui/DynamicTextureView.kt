@@ -22,7 +22,8 @@ class DynamicTextureView(context: Context, attrs: AttributeSet? = null, defStyle
             setMeasuredDimension(width, height)
         } else {
             if (width < height * mRatioWidth / mRatioHeight) {
-                setMeasuredDimension(width, width * mRatioHeight / mRatioWidth)
+                var t=width * mRatioHeight / mRatioWidth
+                setMeasuredDimension(width, t)
             } else {
                 setMeasuredDimension(height * mRatioWidth / mRatioHeight, height)
             }
