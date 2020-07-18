@@ -13,11 +13,11 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
-    private var mFile: File? = null
+    //    private var mFile: File? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        mFile = File(getExternalFilesDir(null), "pic.jpg")
+//        mF/ile = File(getExternalFilesDir(null), "pic.jpg")
     }
 
 }

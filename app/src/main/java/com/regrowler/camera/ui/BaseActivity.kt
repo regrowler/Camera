@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlin.coroutines.CoroutineContext
 
-abstract class BaseActivity : AppCompatActivity(), CoroutineScope,LifecycleOwner {
+abstract class BaseActivity : AppCompatActivity(), CoroutineScope, LifecycleOwner {
     private val job = SupervisorJob()
     override val coroutineContext = Dispatchers.Default + job
 }

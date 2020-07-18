@@ -1,4 +1,4 @@
-package com.regrowler.camera.camera.ui
+package com.regrowler.cameraview.ui
 
 import android.content.Context
 import android.util.AttributeSet

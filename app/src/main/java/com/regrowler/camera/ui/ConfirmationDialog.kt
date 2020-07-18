@@ -12,9 +12,10 @@ import com.regrowler.camera.R
 import com.regrowler.camera.camera.REQUEST_CAMERA_PERMISSION
 
 class ConfirmationDialog : DialogFragment() {
-    companion object{
+    companion object {
         const val FRAGMENT_DIALOG = "dialog"
     }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val parent: Fragment? = parentFragment
         return AlertDialog.Builder(activity)

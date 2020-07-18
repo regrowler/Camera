@@ -1,2 +1,3 @@
+include ':cameraView'
 include ':app'
 rootProject.name = "Camera"
