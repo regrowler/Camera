@@ -24,5 +24,8 @@ class MainActivity : AppCompatActivity() {
         takePictureButton?.setOnClickListener {
             cameraView?.takePhoto()
         }
+        changeCameraButton?.setOnClickListener {
+            cameraView?.nextCamera()
+        }
     }
 }

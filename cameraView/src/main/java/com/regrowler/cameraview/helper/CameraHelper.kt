@@ -151,9 +151,13 @@ class CameraHelper(
             )
         )
     }
+    var currentWidth: Int = 0
+    var currentHeight: Int = 0
 
     @SuppressLint("MissingPermission")
     fun openCamera(width: Int, height: Int) {
+        currentWidth = width
+        currentHeight = height
         setUpCameraOutputs(width, height)
         configureTransform(width, height)
         try {
