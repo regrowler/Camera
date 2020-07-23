@@ -11,7 +11,7 @@ fun CameraHelper.unlockFocus() {
             CaptureRequest.CONTROL_AF_TRIGGER,
             CameraMetadata.CONTROL_AF_TRIGGER_CANCEL
         )
-        setAutoFlash(mPreviewRequestBuilder!!)
+        setFlash(mPreviewRequestBuilder!!)
         mCaptureSession!!.capture(
             mPreviewRequestBuilder!!.build(), mCaptureCallback,
             mBackgroundHandler

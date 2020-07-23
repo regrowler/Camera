@@ -18,7 +18,7 @@ fun CameraHelper.captureStillPicture() {
             CaptureRequest.CONTROL_AF_MODE,
             CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE
         )
-        setAutoFlash(captureBuilder)
+        setFlash(captureBuilder)
 
         // Orientation
         display.rotation.let {

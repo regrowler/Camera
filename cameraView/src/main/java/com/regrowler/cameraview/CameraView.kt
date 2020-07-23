@@ -11,10 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.regrowler.cameraview.helper.CameraHelper
-import com.regrowler.cameraview.helper.configureTransform
-import com.regrowler.cameraview.helper.nextCamera
-import com.regrowler.cameraview.helper.takePicture
+import com.regrowler.cameraview.helper.*
 import com.regrowler.cameraview.ui.DynamicTextureView
 
 public class CameraView(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) :
@@ -74,6 +71,7 @@ public class CameraView(context: Context, attrs: AttributeSet? = null, defStyle:
         ).apply {
             mBackgroundHandler.startBackgroundThread()
             setCameraType()
+            prepareFlashType()
         }
         if (mTextureView.isAvailable) {
             cameraHelper?.openCamera(mTextureView.width, mTextureView.height)
@@ -84,6 +82,7 @@ public class CameraView(context: Context, attrs: AttributeSet? = null, defStyle:
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
+        cameraHelper?.turnOffFlash()
         cameraHelper?.closeCamera()
         cameraHelper?.mBackgroundHandler?.stopBackgroundThread()
         cameraHelper = null
@@ -99,6 +98,34 @@ public class CameraView(context: Context, attrs: AttributeSet? = null, defStyle:
         if (isAttachedToWindow) {
             cameraHelper?.nextCamera()
         }
+    }
+
+    public fun nextFlashType(): FlashType? {
+        if (isAttachedToWindow) {
+            return cameraHelper?.nextFlashType()
+        }
+        return null
+    }
+
+    public fun getFlashMode(): FlashType? {
+        if (isAttachedToWindow) {
+            cameraHelper?.prepareFlashType()
+            return cameraHelper?.flashType
+        }
+        return null
+    }
+
+    public fun turnOffFlash() {
+        if (isAttachedToWindow) {
+            cameraHelper?.turnOffFlash()
+        }
+    }
+
+    public fun isFlashSupported(): Boolean? {
+        if (isAttachedToWindow) {
+            return cameraHelper?.isFlashSupported()
+        }
+        return false
     }
 
     init {
@@ -120,6 +147,6 @@ public class CameraView(context: Context, attrs: AttributeSet? = null, defStyle:
         )
         set.connect(mTextureView.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
         set.applyTo(this)
-        setBackgroundColor(Color.CYAN)
+//        setBackgroundColor(Color.CYAN)
     }
 }

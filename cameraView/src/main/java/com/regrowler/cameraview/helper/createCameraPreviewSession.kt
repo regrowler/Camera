@@ -42,7 +42,7 @@ fun CameraHelper.createCameraPreviewSession() {
                             CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE
                         )
                         // Flash is automatically enabled when necessary.
-                        setAutoFlash(mPreviewRequestBuilder!!)
+                        setFlash(mPreviewRequestBuilder!!)
 
                         // Finally, we start displaying the camera preview.
                         mPreviewRequest = mPreviewRequestBuilder?.build()

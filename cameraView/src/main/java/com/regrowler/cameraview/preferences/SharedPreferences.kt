@@ -6,6 +6,7 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.regrowler.cameraview.R
 import com.regrowler.cameraview.helper.CameraType
+import com.regrowler.cameraview.helper.FlashType
 
 
 public fun Context.getEncryptedSharedPreferences(): SharedPreferences {
@@ -23,5 +24,10 @@ public fun Context.getEncryptedSharedPreferences(): SharedPreferences {
 fun SharedPreferences.saveCameraType(int: Int) {
     this.edit()
         .putInt(CameraType.selectedCameraIdTag, int)
+        .apply()
+}
+fun SharedPreferences.saveFlashType(int: Int) {
+    this.edit()
+        .putInt(FlashType.selectedFlashTypeTag, int)
         .apply()
 }

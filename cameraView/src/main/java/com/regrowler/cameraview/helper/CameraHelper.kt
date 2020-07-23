@@ -10,6 +10,7 @@ import com.regrowler.cameraview.background.handler.BackgroundHandler
 import com.regrowler.cameraview.image.saver.ImageSaver
 import com.regrowler.cameraview.preferences.getEncryptedSharedPreferences
 import com.regrowler.cameraview.preferences.saveCameraType
+import com.regrowler.cameraview.preferences.saveFlashType
 import com.regrowler.cameraview.ui.DynamicTextureView
 import java.io.File
 import java.util.concurrent.Semaphore
@@ -66,6 +67,31 @@ class CameraHelper(
                     .saveCameraType(field!!.value)
                 return
             }
+        }
+    var flashType: FlashType? = null
+        set(value) {
+            value?.let {
+                field = value
+                context.getEncryptedSharedPreferences()
+                    .saveFlashType(value.value)
+                return
+            }
+            FlashType.parse(
+                context.getEncryptedSharedPreferences()
+                    .getInt(FlashType.selectedFlashTypeTag, -1)
+            )?.let {
+                field = it
+                return
+            }
+            var type =
+                if (mFlashSupported!!) {
+                    FlashType.AUTO
+                } else FlashType.OFF
+            field = type
+            context.getEncryptedSharedPreferences()
+                .saveFlashType(type.value)
+            return
+
         }
     var mCameraDevice: CameraDevice? = null
     var mPreviewRequestBuilder: CaptureRequest.Builder? = null
@@ -200,6 +226,8 @@ class CameraHelper(
             mCameraOpenCloseLock.release()
         }
     }
+
+
 
     fun setCameraType(
     ) {
