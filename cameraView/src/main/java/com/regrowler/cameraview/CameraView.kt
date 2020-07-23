@@ -13,6 +13,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.regrowler.cameraview.helper.CameraHelper
 import com.regrowler.cameraview.helper.configureTransform
+import com.regrowler.cameraview.helper.takePicture
 import com.regrowler.cameraview.ui.DynamicTextureView
 
 public class CameraView(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) :
@@ -85,6 +86,12 @@ public class CameraView(context: Context, attrs: AttributeSet? = null, defStyle:
         cameraHelper?.closeCamera()
         cameraHelper?.mBackgroundHandler?.stopBackgroundThread()
         cameraHelper = null
+    }
+
+    public fun takePhoto() {
+        if (isAttachedToWindow) {
+            cameraHelper?.takePicture()
+        }
     }
 
     init {

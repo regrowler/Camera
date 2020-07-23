@@ -7,7 +7,11 @@ import android.media.ImageReader
 import android.util.Size
 import android.view.Display
 import com.regrowler.cameraview.background.handler.BackgroundHandler
+import com.regrowler.cameraview.image.saver.ImageSaver
+import com.regrowler.cameraview.preferences.getEncryptedSharedPreferences
+import com.regrowler.cameraview.preferences.saveCameraType
 import com.regrowler.cameraview.ui.DynamicTextureView
+import java.io.File
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
 
@@ -20,6 +24,9 @@ class CameraHelper(
     companion object {
         const val MAX_PREVIEW_WIDTH = 1920
         const val MAX_PREVIEW_HEIGHT = 1080
+        private fun getNewFileName(): String {
+            return "Camera_${System.currentTimeMillis()}.jpg"
+        }
     }
 
     val mBackgroundHandler =
@@ -28,13 +35,50 @@ class CameraHelper(
         Semaphore(1)
     var mImageReader: ImageReader? = null
     var cameraType: CameraType? = null
+        set(value) {
+            value?.let {
+                field = value
+                context.getEncryptedSharedPreferences()
+                    .saveCameraType(value.value)
+                return
+            }
+            CameraType.parse(
+                context.getEncryptedSharedPreferences()
+                    .getInt(CameraType.selectedCameraIdTag, -1)
+            )?.let {
+                field = it
+            }
+            frontCameraId?.let {
+                field = CameraType.FRONT
+                context.getEncryptedSharedPreferences()
+                    .saveCameraType(field!!.value)
+                return
+            }
+            backCameraId?.let {
+                field = CameraType.BACK
+                context.getEncryptedSharedPreferences()
+                    .saveCameraType(field!!.value)
+                return
+            }
+            externalCameraId?.let {
+                field = CameraType.EXTERNAL
+                context.getEncryptedSharedPreferences()
+                    .saveCameraType(field!!.value)
+                return
+            }
+        }
     var mCameraDevice: CameraDevice? = null
     var mPreviewRequestBuilder: CaptureRequest.Builder? = null
     var mCaptureSession: CameraCaptureSession? = null
     var mPreviewRequest: CaptureRequest? = null
     var mState = CameraViewState.STATE_PREVIEW
     var mPreviewSize: Size? = null
-
+    var mFile: File? = null
+        get() {
+            field?.let { return it }
+            field = File(context.getExternalFilesDir(null), getNewFileName())
+            return field
+        }
     val frontCameraId: String? by lazy {
         manager.cameraIdList.forEach { cameraId ->
             manager.getCameraCharacteristics(cameraId).get(CameraCharacteristics.LENS_FACING)?.let {
@@ -99,6 +143,14 @@ class CameraHelper(
         }
 
     }
+    val mOnImageAvailableListener = ImageReader.OnImageAvailableListener { reader ->
+        mBackgroundHandler.post(
+            ImageSaver(
+                reader.acquireNextImage(),
+                mFile!!
+            )
+        )
+    }
 
     @SuppressLint("MissingPermission")
     fun openCamera(width: Int, height: Int) {
@@ -145,20 +197,9 @@ class CameraHelper(
         }
     }
 
-    fun setCameraType() {
-
-        frontCameraId?.let {
-            cameraType = CameraType.FRONT
-            return
-        }
-        backCameraId?.let {
-            cameraType = CameraType.BACK
-            return
-        }
-        externalCameraId?.let {
-            cameraType = CameraType.EXTERNAL
-            return
-        }
+    fun setCameraType(
+    ) {
+        cameraType = null
     }
 
 }

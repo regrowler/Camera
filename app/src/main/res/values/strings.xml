@@ -1,4 +1,3 @@
 <resources>
     <string name="app_name">Camera</string>
-    <string name="shared_preferences_encrypted_file_name">CameraPrefs</string>
 </resources>

@@ -56,6 +56,9 @@ private fun CameraHelper.setImageReader() {
             ImageFormat.JPEG,
             2
         )
+        mImageReader!!.setOnImageAvailableListener(
+            mOnImageAvailableListener, mBackgroundHandler
+        )
     }
 }
 

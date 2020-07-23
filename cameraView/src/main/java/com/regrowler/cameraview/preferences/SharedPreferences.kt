@@ -1,12 +1,14 @@
-package com.regrowler.camera.preferences
+package com.regrowler.cameraview.preferences
 
-import android.content.ContextWrapper
+import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
-import com.regrowler.camera.R
+import com.regrowler.cameraview.R
+import com.regrowler.cameraview.helper.CameraType
 
-fun ContextWrapper.getEncryptedSharedPreferences(): SharedPreferences {
+
+public fun Context.getEncryptedSharedPreferences(): SharedPreferences {
     var masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
     var sharedPreferences = EncryptedSharedPreferences.create(
         resources.getString(R.string.shared_preferences_encrypted_file_name),
@@ -16,4 +18,10 @@ fun ContextWrapper.getEncryptedSharedPreferences(): SharedPreferences {
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )
     return sharedPreferences
+}
+
+fun SharedPreferences.saveCameraType(int: Int) {
+    this.edit()
+        .putInt(CameraType.selectedCameraIdTag, int)
+        .apply()
 }

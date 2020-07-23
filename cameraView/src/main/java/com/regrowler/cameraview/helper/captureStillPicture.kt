@@ -1,6 +1,7 @@
 package com.regrowler.cameraview.helper
 
 import android.hardware.camera2.*
+import android.view.Surface
 
 fun CameraHelper.captureStillPicture() {
     try {
@@ -42,9 +43,26 @@ fun CameraHelper.captureStillPicture() {
 //                    )
                     unlockFocus()
                 }
+
+                override fun onCaptureFailed(
+                    session: CameraCaptureSession,
+                    request: CaptureRequest,
+                    failure: CaptureFailure
+                ) {
+                    super.onCaptureFailed(session, request, failure)
+                }
+
+                override fun onCaptureBufferLost(
+                    session: CameraCaptureSession,
+                    request: CaptureRequest,
+                    target: Surface,
+                    frameNumber: Long
+                ) {
+                    super.onCaptureBufferLost(session, request, target, frameNumber)
+                }
             }
-        mCaptureSession!!.stopRepeating()
-        mCaptureSession!!.abortCaptures()
+        mCaptureSession!!.stopRepeating();
+        mCaptureSession!!.abortCaptures();
         mCaptureSession!!.capture(captureBuilder.build(), CaptureCallback, null)
     } catch (e: CameraAccessException) {
         e.printStackTrace()

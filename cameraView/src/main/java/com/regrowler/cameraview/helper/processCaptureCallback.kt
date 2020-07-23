@@ -25,6 +25,10 @@ fun CameraHelper.processCaptureCallback(result: CaptureResult) {
                 } else {
                     runPrecaptureSequence()
                 }
+            }else if(afState==CaptureResult.CONTROL_AF_STATE_INACTIVE){
+                mState =
+                    CameraViewState.STATE_PICTURE_TAKEN
+                captureStillPicture()
             }
         }
         CameraViewState.STATE_WAITING_PRECAPTURE -> {
